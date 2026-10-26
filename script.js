@@ -20,4 +20,15 @@ function getComputerChoice() {
     }
 }
 
-console.log(getComputerChoice());
+
+/*
+PSEUDOCODE getHumanChoice function:
+GET user's input through prompt
+RETURN the value lowered in characters
+*/
+
+function getHumanChoice () {
+
+    let input = prompt("What's your choice? (Rock/Paper/Scissors): ");
+    return input.toLowerCase();
+}
