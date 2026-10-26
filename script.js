@@ -32,9 +32,6 @@ function getHumanChoice () {
     return input.toLowerCase();
 }
 
-let computerScore = 0;
-let humanScore = 0;
-
 /*
 PSEUDOCODE playRound function:
 GET user's choice by calling getHumanChoice
@@ -47,26 +44,57 @@ ELSE
     annunces the draw
 */
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+/*
+PSEUDOCODE playGame procedure:
+INIT humanScore and computerScore
+FOR 5 times
+    CALL playRound
+    DISPLAY round result message and actual scores
+ENDFOR
+DISPLAY final scores
+*/
 
-function playRound(humanSelection, computerSelection) {
+function playGame() {
+
+    let computerScore = 0;
+    let humanScore = 0;
+
+    function playRound(humanSelection, computerSelection) {
     // All selections in which the user wins the round
-    if ((humanSelection === 'rock' && computerSelection === 'scissors') ||
-        (humanSelection === 'paper' && computerSelection === 'rock') || 
-        (humanSelection === 'scissors' && computerSelection === 'paper')) {
-            humanScore++;
-            console.log(`You won! ${humanSelection} beats ${computerSelection}\nYour score: ${humanScore}, Computer score: ${computerScore}`);
+        if ((humanSelection === 'rock' && computerSelection === 'scissors') ||
+            (humanSelection === 'paper' && computerSelection === 'rock') || 
+            (humanSelection === 'scissors' && computerSelection === 'paper')) {
+                humanScore++;
+                return(`You won! ${humanSelection} beats ${computerSelection}\nYour score: ${humanScore}, Computer score: ${computerScore}`);
+        }
+        else if ((humanSelection === 'scissors' && computerSelection === 'rock') ||
+                (humanSelection === 'rock' && computerSelection === 'paper') || 
+                (humanSelection === 'paper' && computerSelection === 'scissors')) {
+                    computerScore++;
+                    return(`You lost! ${computerSelection} beats ${humanSelection}\nYour score: ${humanScore}, Computer score: ${computerScore}`);
+        }
+        else {
+            return(`It's a draw! Your score: ${humanScore}, Computer score: ${computerScore}`);
+        }
     }
-    else if ((humanSelection === 'scissors' && computerSelection === 'rock') ||
-            (humanSelection === 'rock' && computerSelection === 'paper') || 
-            (humanSelection === 'paper' && computerSelection === 'scissors')) {
-                computerScore++;
-                console.log(`You lost! ${computerSelection} beats ${humanSelection}\nYour score: ${humanScore}, Computer score: ${computerScore}`);
+    
+    for (let i = 0; i < 5; i++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        alert(playRound(humanSelection, computerSelection));
+    }
+
+    // Announce final results
+    if (humanScore > computerScore) {
+        alert(`You won the game! Your final score: ${humanScore}, Computer final score: ${computerScore}.`);
+    }
+    else if (computerScore > humanScore) {
+        alert(`You lost the game! Computer final score: ${computerScore}, your final score: ${humanScore}.`);
     }
     else {
-        console.log(`It's a draw! Your score: ${humanScore}, Computer score: ${computerScore}`);
-    }
+        alert(`Game finish in draw! Your score and computer's: ${humanScore}.`);
+    } 
+
 }
 
-playRound(humanSelection, computerSelection);
+playGame();
